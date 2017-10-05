@@ -48,10 +48,13 @@ export class FirstrunConfirmComponent {
     }
 
     loadDashboard(){
-        this.showLoader = false;
-        this.firstRunService.setFirstRun();
-        this.wizardService.initialize();
-        this.router.navigate(['/m/dashboard']);
+        this.firstRunService.setFirstRun(true)
+            .then((firstrun: boolean) => {
+                if (!firstrun) {
+                    this.wizardService.initialize();
+                    this.router.navigate(['/m/dashboard']);
+                }
+            });
     }
 
     goBack(){
